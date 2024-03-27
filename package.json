@@ -34,15 +34,15 @@
 		]
 	},
 	"scripts": {
-		"test": "jest",
-		"pretest": "yarn run compile-web",
-		"vscode:prepublish": "yarn run package-web",
 		"compile-web": "webpack",
-		"watch-web": "webpack --watch",
-		"package-web": "webpack --mode production --devtool hidden-source-map",
+		"deploy": "vsce publish --yarn",
 		"lint": "eslint src --ext ts",
+		"package-web": "webpack --mode production --devtool hidden-source-map",
+		"pretest": "yarn run compile-web",
 		"run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. .",
-		"deploy": "vsce publish --yarn"
+		"test": "jest",
+		"vscode:prepublish": "yarn run package-web",
+		"watch-web": "webpack --watch"
 	},
 	"devDependencies": {
 		"@types/jest": "^29.5.12",
