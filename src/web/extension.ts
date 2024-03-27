@@ -2,6 +2,8 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+import * as converter from './converter';
+
 // this method is called when your extension is deactivated
 export function deactivate() { }
 
@@ -29,26 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable);
 }
 
-function convertToNet(uuid: string) {
-	const a = [...uuid];
-
-	const cvt = a[6] + a[7] + a[4] + a[5] + a[2] + a[3] + a[0] + a[1] + '-' + a[10] + a[11] + a[8] + a[9] + '-' + a[14] + a[15] + a[12] + a[13] + '-' + a[16] + a[17] + a[18] + a[19] + '-' + uuid.substr(20);
-	const result = cvt.toLowerCase();
-
-	return result;
-}
-
-function convertToRaw(uuid: string) {
-	const a = [...uuid];
-
-	const cvt = a[6] + a[7] + a[4] + a[5] + a[2] + a[3] + a[0] + a[1] + a[11] + a[12] + a[9] + a[10] + a[16] + a[17] + a[14] + a[15] + a[19] + a[20] + a[21] + a[22] + uuid.substr(24);
-	const result = cvt.toUpperCase();
-
-	return result;
-}
-
-//function getGuidsToConvert(): string[] {
-const getGuidsToConvert = async (editorr: vscode.TextEditor | undefined): Promise<string[]> => {
+async function getGuidsToConvert(editorr: vscode.TextEditor | undefined): Promise<string[]> {
 	let inputGuids: string[] = new Array();
 	const editor = vscode.window.activeTextEditor;
 
@@ -81,11 +64,17 @@ const getGuidsToConvert = async (editorr: vscode.TextEditor | undefined): Promis
 	return inputGuids;
 };
 
+async function convertGuids(inputGuids: string[]): Promise<string[]> {
+	return inputGuids.map(guid => {
+		if(guid.length === 32) {
+			return converter.convertToNet(guid);
+		}
 
-const convertGuids = async (inputGuids: string[]): Promise<string[]> => {
-	return await inputGuids.map(guid => {
-		const converted = guid.length === 32 ? convertToNet(guid) : guid.length === 36 ? convertToRaw(guid) : guid;
-		return converted;
+		if(guid.length === 36) {
+			return converter.convertToRaw(guid);
+		}
+
+		return guid;
 	});
 };
 
