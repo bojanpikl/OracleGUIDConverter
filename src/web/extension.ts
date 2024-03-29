@@ -85,7 +85,7 @@ async function outputResult(convertedGuids: string[]) {
 	if (editor) {//&& fromEditor) {
 		const selection = editor.selection;
 
-		if(selection) {
+		if(!selection.isEmpty) {
 			editor.edit(editBuilder => {
 				editBuilder.replace(selection, converted);
 			});
