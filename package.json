@@ -3,7 +3,7 @@
 	"publisher": "piklbojan",
 	"displayName": "Oracle Guid Converter",
 	"description": "Convert Oracle GUID Raw(16) to .Net and vice versa",
-	"version": "0.0.14",
+	"version": "0.0.15",
 	"icon": "assets/logo.png",
 	"repository": "https://github.com/bojanpikl/OracleGUIDConverter",
 	"engines": {

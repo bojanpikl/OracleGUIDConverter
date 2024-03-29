@@ -85,9 +85,11 @@ async function outputResult(convertedGuids: string[]) {
 	if (editor) {//&& fromEditor) {
 		const selection = editor.selection;
 
-		editor.edit(editBuilder => {
-			editBuilder.replace(selection, converted);
-		});
+		if(selection) {
+			editor.edit(editBuilder => {
+				editBuilder.replace(selection, converted);
+			});
+		}
 	}
 
 	await vscode.env.clipboard.writeText(converted);
