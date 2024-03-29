@@ -38,14 +38,14 @@ async function getGuidsToConvert(editorr: vscode.TextEditor | undefined): Promis
 	if (editor) {
 		const document = editor.document;
 		const selection = editor.selection;
-
-		// Get the word within the selection
 		const text = document.getText(selection);
-		inputGuids = text.split(/[\r\n]+/);
+
+		if(text) {
+			inputGuids = text.split(/[\r\n]+/);
+		}
 	}
 
 	if (inputGuids.length === 0) {
-		// TODO@BP fromEditor = false;
 		const input = await vscode.window.showInputBox({
 			placeHolder: 'Enter guid that you wish to convert',
 			validateInput: text => {
